@@ -1,0 +1,782 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Ride-my-way is an online platform where users can order for rides to their individual destination",
+    "version": "1.0.0",
+    "title": "Ride-my-way",
+    "contact": {
+      "email": "bosomadex@gmail.com"
+    }
+  },
+  "host": "localhost:2021",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Everything about users"
+    },
+    {
+      "name": "Ride",
+      "description": "Everything about ride"
+    },
+    {
+      "name": "Request",
+      "description": "Everything about Request"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/user/create": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create user account",
+        "description": "This will create user account",
+        "operationId": "createUserAccount",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that need to be added to user table",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/user/forget": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "forget user password",
+        "description": "This will send a link to reset password",
+        "operationId": "forgetPassword",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that receives email",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/forget"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/user/reset-password": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "reset user password",
+        "description": "This will set user password",
+        "operationId": "resetPassword",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "Reset_Token",
+            "description": "Reset Token to be passed to query",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that reset password",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/reset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/user/verify": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "email verification",
+        "description": "This will verify user email",
+        "operationId": "verifyUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "verify_Token",
+            "required": true,
+            "description": "verify account query Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/user/verify/resend": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "resend verification",
+        "description": "This will allow user to resend email verification",
+        "operationId": "resendVerifyUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that receives email",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/forget"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user",
+        "description": "Allow users to login to the platform",
+        "operationId": "loginUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that need to be logged in",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/ride": {
+      "get": {
+        "tags": ["Ride"],
+        "summary": "get all ride",
+        "description": "Multiple Ride to be displayed",
+        "operationId": "getAllRides",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/ride/create": {
+      "post": {
+        "tag": ["Ride"],
+        "summary": "create ride for users",
+        "description": "Allow user to create ride",
+        "operationId": "createRideOffer",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "object",
+            "description": "Ride list",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ride"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success Response Format"
+          },
+          "400": {
+            "description": "Failure Response Format"
+          }
+        }
+      }
+    },
+    "/ride/{rideId}": {
+      "get": {
+        "tags": ["Ride"],
+        "summary": "get One Ride",
+        "description": "One Ride to be displayed",
+        "operationId": "getOneRide",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "path",
+            "name": "rideId",
+            "description": "params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/request": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "get all request",
+        "description": "Multiple Request to be displayed",
+        "operationId": "getAllRequest",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/request/{driverId}": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "get One Request",
+        "description": "One Request to be displayed",
+        "operationId": "getOneRequest",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "path",
+            "name": "driverId",
+            "description": "params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/request/create/{driverId}": {
+      "post": {
+        "tag": ["Request"],
+        "summary": "create request for users",
+        "description": "Allow user to create request",
+        "operationId": "requestRide",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "object",
+            "description": "Request list",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/request"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success Response Format"
+          },
+          "400": {
+            "description": "Failure Response Format"
+          }
+        }
+      }
+    },
+    "/request/get/{driverId}": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "get One Request",
+        "description": "One Request to be displayed",
+        "operationId": "getOneRequest",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "path",
+            "name": "driverId",
+            "description": "params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/request/{driverId}/toRide": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "get request to a ride",
+        "description": "All Request to be displayed to a ride",
+        "operationId": "getAllRequestToRide",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "path",
+            "name": "driverId",
+            "description": "params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/request/update/{driverId}": {
+      "put": {
+        "tags": ["Request"],
+        "summary": "update Request",
+        "description": "This will update Request",
+        "operationId": "updateRequest",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "path",
+            "name": "driverId",
+            "description": "params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/request/delete/{driverId}": {
+      "delete": {
+        "tags": ["Request"],
+        "summary": "Delete Request",
+        "description": "This will delete Request",
+        "operationId": "deleteRequest",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Bearer token",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "path",
+            "name": "driverId",
+            "description": "params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "params": {
+      "types": "string",
+      "example": "5ee4ef511bd45f1010f12ca4"
+    },
+    "token": {
+      "type": "string",
+      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZTRlZjUxMWJkNDVmMTAxMGYxMmNhNCIsImlhdCI6MTU5MjA2MjgxMSwiZXhwIjoxNTkyMTQ5MjExfQ.ZbOs13ffTE0xmUFM8fXH70lDrTMzodm1KAYEwwq-rL0"
+    },
+    "ride": {
+      "type": "object",
+      "properties": {
+        "departure": {
+          "type": "string",
+          "example": "example"
+        },
+        "destination": {
+          "type": "string",
+          "example": "example"
+        },
+        "seats": {
+          "type": "string",
+          "example": "example"
+        },
+        "time": {
+          "type": "string",
+          "example": "example"
+        },
+        "date": {
+          "type": "string",
+          "example": "example"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "example"
+        }
+      }
+    },
+    "reset": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      }
+    },
+    "forget": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "bosomadex@gmail.com"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "example": "fullName"
+        },
+        "username": {
+          "type": "string",
+          "example": "username"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "phoneNumber"
+        },
+        "email": {
+          "type": "string",
+          "example": "email"
+        },
+        "password": {
+          "type": "string",
+          "format": "password",
+          "example": "password"
+        }
+      }
+    },
+    "login": {
+      "type": "object",
+      "properties": {
+        "dataField": {
+          "type": "string",
+          "example": "bosomadex@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      }
+    },
+    "SuccessApiResponseFormat": {
+      "type":"object",
+      "properties":{
+        "message": {
+          "type":"string"
+        },
+        "data": {
+          "type":"object"
+        }
+      }
+    },
+    "FailedApiResponseFormat": {
+      "type":"object",
+      "properties":{
+        "message": {
+          "type":"string"
+        },
+        "error": {
+          "type":"object"
+        }
+      }
+    }
+  },
+
+  "externalDocs": {
+    "description": "README.md file for project",
+    "url": "https://github.com/bosom12/Ride-my-way/blob/master/README.md"
+  }
+}
