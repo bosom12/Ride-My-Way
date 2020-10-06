@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema(
     verifyExpire: String,
     isVerified: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   {
@@ -43,32 +43,41 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
+/* eslint-disable */
 UserSchema.pre('save', async function () {
-  // if (this.isModified('password')) {
-    const saltRounds = 10;
+  if (this.isModified('password')) {
+  const saltRounds = 10;
 
-    const genSalt = await bcrypt.genSalt(saltRounds);
+  const genSalt = await bcrypt.genSalt(saltRounds);
 
-    const hash = await bcrypt.hash(this.password, genSalt);
+  const hash = await bcrypt.hash(this.password, genSalt);
 
-    this.password = hash;
-    return;
-  // }
+  this.password = hash;
+
+  }
 });
 
-const comparePassword = async function (password) {
+/* eslint-enable */
+/**
+ * @desc Function compares hash password and user password
+ * @param {string} password
+ * @returns {boolean} true of false
+ */
+async function comparePassword(password) {
   const user = this;
-  console.log('data =>>>', password + ',', 'hash =>>>', user.password)
-  return await bcrypt.compare(password, user.password);
-};
+  const compare = await bcrypt.compare(password, user.password);
+  return compare;
+}
 
-UserSchema.methods.comparePassword = comparePassword
-
+/* eslint-disable */
 UserSchema.methods.toJSON = function () {
   const _user = this.toObject();
   delete _user.password;
   return _user;
 };
+
+/* eslint-enable */
+UserSchema.methods.comparePassword = comparePassword;
 
 const user = mongoose.model('User', UserSchema);
 

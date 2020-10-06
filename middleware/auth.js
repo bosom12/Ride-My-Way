@@ -6,13 +6,21 @@ config();
 
 const secret = process.env.SECRET;
 
+/**
+ * @desc Token validator
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns {object} JSON
+ */
 export const verifyToken = (req, res, next) => {
   try {
     const tokenBearer = req.headers.authorization;
-    if (!tokenBearer)
+    if (!tokenBearer) {
       return res
         .status(403)
         .json({ status: 403, message: 'Client key required' });
+    }
 
     const token = tokenBearer.split(' ')[1];
 

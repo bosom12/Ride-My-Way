@@ -1,18 +1,18 @@
-import db from '../model/';
 import { Form } from 'form-my-simple-validation';
-import formSchema from '../validator/schema';
 import { uuid } from 'uuidv4';
+import db from '../model';
+import formSchema from '../validator/schema';
 import { send } from '../utils/mail';
 
 /**
- * @desc CLASS
+ * @desc Password
  */
 class Password {
   /**
    * @desc FORGET PASSWORD
-   * @param {*} REQUEST
-   * @param {*} RESPONSE
-   * @return {*}JSON
+   * @param {*} req
+   * @param {*} res
+   * @return {*} JSON
    */
   static async forgetPassword(req, res) {
     try {
@@ -67,11 +67,12 @@ class Password {
       return res.status(500).json({ error: true, message: err.message });
     }
   }
+
   /**
    * @desc RESET PASSWORD
-   * @param {*} REQUEST
-   * @param {*} RESPONSE
-   * @return {obj}JSON
+   * @param {*} req THE REQUEST OBJECT
+   * @param {*} res THE RESPONSE OBJECT
+   * @return {obj} JSON
    */
   static async resetPassword(req, res) {
     try {
@@ -110,8 +111,8 @@ class Password {
 
   /**
    * @desc VERIFICATION
-   * @param {*} REQUEST
-   * @param {*} RESPONSE
+   * @param {*} req
+   * @param {*} res
    * @return {obj}JSON
    */
   static async verifyUser(req, res) {
@@ -137,8 +138,8 @@ class Password {
 
   /**
    * @desc RESEND VERIFICATION
-   * @param {*} REQUEST
-   * @param {*} RESPONSE
+   * @param {*} req
+   * @param {*} res
    * @return {obj}JSON
    */
   static async resendVerifyUser(req, res) {

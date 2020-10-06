@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const requestSchema = mongoose.Schema(
   {
-    userId: {
+    passengerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
@@ -11,9 +11,8 @@ const requestSchema = mongoose.Schema(
       ref: 'User',
     },
     rideId: {
-      type: String,
-      trim: true,
-      required: 'rideId is required',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Ride'
     },
     message: {
       type: String,

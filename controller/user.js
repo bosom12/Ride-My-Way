@@ -1,9 +1,10 @@
-import db from '../model/';
 import { Form } from 'form-my-simple-validation';
+// import { uuid } from 'uuidv4';
+import db from '../model';
 import formSchema from '../validator/schema';
-import { uuid } from 'uuidv4';
-import { send } from '../utils/mail';
+// import { send } from '../utils/mail'
 import * as Utils from '../utils/helpers';
+
 
 /**
  * @desc CLASS
@@ -11,13 +12,15 @@ import * as Utils from '../utils/helpers';
 class User {
   /**
    * @desc CREATING USER ACCOUNT
-   * @param {*} REQUEST
-   * @param {*} RESPONSE
-   *  @return {obj} JSON
+   * @param {*} req
+   * @param {*} res
+   * @return {obj} JSON
    */
   static async createUserAccount(req, res) {
     try {
-      const { fullName, username, phoneNumber, email, password } = req.body;
+      const {
+        fullName, username, phoneNumber, email, password
+      } = req.body;
 
       /**
        * @desc VALIDATE ACCOUNT
@@ -53,7 +56,7 @@ class User {
 
       // const host = 'host';
 
-      //SEND VERIFICATION LINK
+      // SEND VERIFICATION LINK
       // const verifyToken = uuid();
 
       // const verifyExpire = Date.now() + 3600000;
@@ -91,11 +94,10 @@ class User {
 
   /**
    * @desc LOGIN USER
-   * @param {*} REQUEST
-   * @param {*} RESPONSE
+   * @param {*} req
+   * @param {*} res
    * @return {obj} JSON
    */
-
   static async loginUser(req, res) {
     try {
       const { dataField, password } = req.body;
@@ -120,13 +122,12 @@ class User {
 
       // QUERY DATABASE
       if (!isPhone) {
-        user = await db.User.findOne(db.Users, { email: dataField });
+        user = await db.User.findOne({ email: dataField });
       } else {
-        user = await db.User.findOne(db.Users, { PhoneNumber: dataField });
+        user = await db.User.findOne({ PhoneNumber: dataField });
       }
 
       if (user) {
-        console.log(user)
         const passwordMatch = await user.comparePassword(password);
 
         if (!passwordMatch) {
@@ -160,8 +161,8 @@ class User {
   /**
    * @desc DELETE USER ACCOUNT
    * @param {*} req The request object
-   * @param {*} req The response object
-   * @return {obj}JSON
+   * @param {*} res The response object
+   * @return {object} JSON
    */
   static async deleteAccount(req, res) {
     try {

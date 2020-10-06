@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const RideSchema = new mongoose.Schema(
   {
-    userId: {
+    driverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
@@ -16,18 +16,18 @@ const RideSchema = new mongoose.Schema(
       trim: true,
       required: 'destination is required',
     },
-    driver: {
+    message: {
       type: String,
       trim: true,
-      required: 'drivers name is required ',
+      required: 'message is required ',
     },
     seats: {
-      type: String,
-      required: 'seat is required',
+      type: Number,
+      default: 0
     },
     cost: {
-      type: String,
-      required: 'cost is required',
+      type: Number,
+      default: 0.00
     },
     time: {
       type: String,

@@ -15,7 +15,7 @@ const option = {
 
 mongoose
   .connect(process.env.MONGODB_URL, option)
-  .then(() => console.log('connected'))
-  .catch((err) => console.log(err.message));
+  .then(() => console.log('Mongodb connected!'))
+  .catch(err => console.log(err.message));
 
 export default { User, Ride, Request };

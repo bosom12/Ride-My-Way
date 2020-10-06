@@ -22,20 +22,17 @@ export default {
   },
   createForm: {
     formType: 'createRide',
-    departure: { field: 'departure', required: true, isDeparture: true },
-    destination: { field: 'destination', required: true, isDestination: true },
-    driver: { field: 'driver', required: true, isDriver: true },
-    seats: { field: 'seats', required: true, isSeats: true },
-    time: { field: 'time', required: true, isTime: true },
-    date: { field: 'date', required: true, isDate: Date.now() },
+    departure: { field: 'departure', required: true },
+    destination: { field: 'destination', required: true },
+    driver: { field: 'message', required: true },
+    seats: { field: 'seats' },
+    cost: { field: 'cost' },
+    time: { field: 'time', required: true },
+    date: { field: 'date', required: true },
   },
   requestForm: {
     formType: 'requestRide',
     message: { field: 'message', required: true },
-  },
-  updateRequest: {
-    formType: 'updateRide',
-    action: { field: 'action', required: true },
   },
   forgetForm: {
     formType: 'forgetPassword',

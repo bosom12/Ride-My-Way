@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "title": "Ride-my-way",
     "contact": {
-      "email": "bosomadex@gmail.com"
+      "email": "bosom.adek.sam@gmail.com"
     }
   },
   "host": "localhost:2021",
@@ -245,17 +245,6 @@
         "description": "Multiple Ride to be displayed",
         "operationId": "getAllRides",
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "authorization",
-            "description": "Bearer token",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/token"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success Response Format",
@@ -274,7 +263,7 @@
     },
     "/ride/create": {
       "post": {
-        "tag": ["Ride"],
+        "tags": ["Ride"],
         "summary": "create ride for users",
         "description": "Allow user to create ride",
         "operationId": "createRideOffer",
@@ -321,6 +310,40 @@
         "produces": ["application/json"],
         "parameters": [
           {
+            "in": "path",
+            "name": "rideId",
+            "description": "params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response Format",
+            "schema": {
+              "$ref": "#/definitions/SuccessApiResponseFormat"
+            }
+          },
+          "400": {
+            "description": "Failure Response Format",
+            "schema": {
+              "$ref": "#/definitions/FailedApiResponseFormat"
+            }
+          }
+        }
+      }
+    },
+    "/ride/delete/{rideId}": {
+      "delete": {
+        "tags": ["Ride"],
+        "summary": "Delete Ride Offer",
+        "description": "This will delete Ride",
+        "operationId": "deleteRideoffer",
+        "produces": ["application/json"],
+        "parameters": [
+          {
             "in": "header",
             "name": "authorization",
             "description": "Bearer token",
@@ -356,87 +379,9 @@
         }
       }
     },
-    "/request": {
-      "get": {
-        "tags": ["Request"],
-        "summary": "get all request",
-        "description": "Multiple Request to be displayed",
-        "operationId": "getAllRequest",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "authorization",
-            "description": "Bearer token",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/token"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success Response Format",
-            "schema": {
-              "$ref": "#/definitions/SuccessApiResponseFormat"
-            }
-          },
-          "400": {
-            "description": "Failure Response Format",
-            "schema": {
-              "$ref": "#/definitions/FailedApiResponseFormat"
-            }
-          }
-        }
-      }
-    },
-    "/request/{driverId}": {
-      "get": {
-        "tags": ["Request"],
-        "summary": "get One Request",
-        "description": "One Request to be displayed",
-        "operationId": "getOneRequest",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "authorization",
-            "description": "Bearer token",
-            "required": true,
-            "type": "string",
-            "schema": {
-              "$ref": "#/definitions/token"
-            }
-          },
-          {
-            "in": "path",
-            "name": "driverId",
-            "description": "params",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/params"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success Response Format",
-            "schema": {
-              "$ref": "#/definitions/SuccessApiResponseFormat"
-            }
-          },
-          "400": {
-            "description": "Failure Response Format",
-            "schema": {
-              "$ref": "#/definitions/FailedApiResponseFormat"
-            }
-          }
-        }
-      }
-    },
-    "/request/create/{driverId}": {
+    "/request/create/{rideId}": {
       "post": {
-        "tag": ["Request"],
+        "tags": ["Request"],
         "summary": "create request for users",
         "description": "Allow user to create request",
         "operationId": "requestRide",
@@ -451,6 +396,16 @@
             "type": "string",
             "schema": {
               "$ref": "#/definitions/token"
+            }
+          },
+          {
+            "in": "path",
+            "name": "rideId",
+            "type": "string",
+            "description": "Id of ride",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/params"
             }
           },
           {
@@ -474,51 +429,7 @@
         }
       }
     },
-    "/request/get/{driverId}": {
-      "get": {
-        "tags": ["Request"],
-        "summary": "get One Request",
-        "description": "One Request to be displayed",
-        "operationId": "getOneRequest",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "authorization",
-            "description": "Bearer token",
-            "required": true,
-            "type": "string",
-            "schema": {
-              "$ref": "#/definitions/token"
-            }
-          },
-          {
-            "in": "path",
-            "name": "driverId",
-            "description": "params",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/params"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success Response Format",
-            "schema": {
-              "$ref": "#/definitions/SuccessApiResponseFormat"
-            }
-          },
-          "400": {
-            "description": "Failure Response Format",
-            "schema": {
-              "$ref": "#/definitions/FailedApiResponseFormat"
-            }
-          }
-        }
-      }
-    },
-    "/request/{driverId}/toRide": {
+    "/request/ride": {
       "get": {
         "tags": ["Request"],
         "summary": "get request to a ride",
@@ -534,103 +445,6 @@
             "type": "string",
             "schema": {
               "$ref": "#/definitions/token"
-            }
-          },
-          {
-            "in": "path",
-            "name": "driverId",
-            "description": "params",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/params"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success Response Format",
-            "schema": {
-              "$ref": "#/definitions/SuccessApiResponseFormat"
-            }
-          },
-          "400": {
-            "description": "Failure Response Format",
-            "schema": {
-              "$ref": "#/definitions/FailedApiResponseFormat"
-            }
-          }
-        }
-      }
-    },
-    "/request/update/{driverId}": {
-      "put": {
-        "tags": ["Request"],
-        "summary": "update Request",
-        "description": "This will update Request",
-        "operationId": "updateRequest",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "authorization",
-            "description": "Bearer token",
-            "required": true,
-            "type": "string",
-            "schema": {
-              "$ref": "#/definitions/token"
-            }
-          },
-          {
-            "in": "path",
-            "name": "driverId",
-            "description": "params",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/params"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success Response Format",
-            "schema": {
-              "$ref": "#/definitions/SuccessApiResponseFormat"
-            }
-          },
-          "400": {
-            "description": "Failure Response Format",
-            "schema": {
-              "$ref": "#/definitions/FailedApiResponseFormat"
-            }
-          }
-        }
-      }
-    },
-    "/request/delete/{driverId}": {
-      "delete": {
-        "tags": ["Request"],
-        "summary": "Delete Request",
-        "description": "This will delete Request",
-        "operationId": "deleteRequest",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "authorization",
-            "description": "Bearer token",
-            "required": true,
-            "type": "string",
-            "schema": {
-              "$ref": "#/definitions/token"
-            }
-          },
-          {
-            "in": "path",
-            "name": "driverId",
-            "description": "params",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/params"
             }
           }
         ],
@@ -654,34 +468,42 @@
   "definitions": {
     "params": {
       "types": "string",
-      "example": "5ee4ef511bd45f1010f12ca4"
+      "example": "5f70be16fb7060031581ccd8"
     },
     "token": {
       "type": "string",
-      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZTRlZjUxMWJkNDVmMTAxMGYxMmNhNCIsImlhdCI6MTU5MjA2MjgxMSwiZXhwIjoxNTkyMTQ5MjExfQ.ZbOs13ffTE0xmUFM8fXH70lDrTMzodm1KAYEwwq-rL0"
+      "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNzBiMDMxNmJmMDBjZDYxMTY2YzJjMyIsImlhdCI6MTYwMTcyMDQ4MCwiZXhwIjoxNjAxODA2ODgwfQ.oFKICFfzZw4eQYsCP23ztXS2hmQaAsx6ioPuUgzUlP0"
     },
     "ride": {
       "type": "object",
       "properties": {
         "departure": {
           "type": "string",
-          "example": "example"
+          "example": "abule-oja"
         },
         "destination": {
           "type": "string",
-          "example": "example"
+          "example": "island"
+        },
+        "message":{
+          "type":"string",
+          "example": "So no lapping"
         },
         "seats": {
-          "type": "string",
-          "example": "example"
+          "type": "integer",
+          "example": 4
         },
         "time": {
           "type": "string",
-          "example": "example"
+          "example": "12:00"
+        },
+        "cost":{
+          "type": "int32",
+          "example": 20.00
         },
         "date": {
           "type": "string",
-          "example": "example"
+          "example": "27/10/2020"
         }
       }
     },
@@ -690,7 +512,7 @@
       "properties": {
         "message": {
           "type": "string",
-          "example": "example"
+          "example": "Please dont arrive late"
         }
       }
     },
@@ -708,7 +530,7 @@
       "properties": {
         "email": {
           "type": "string",
-          "example": "bosomadex@gmail.com"
+          "example": "bosom.adek.sam@gmail.com"
         }
       }
     },
@@ -717,19 +539,19 @@
       "properties": {
         "fullName": {
           "type": "string",
-          "example": "fullName"
+          "example": "Bosom Adekunle"
         },
         "username": {
           "type": "string",
-          "example": "username"
+          "example": "Bosom12"
         },
         "phoneNumber": {
           "type": "string",
-          "example": "phoneNumber"
+          "example": "+2348160178764"
         },
         "email": {
           "type": "string",
-          "example": "email"
+          "example": "bosom.adek.sam@gmail.com"
         },
         "password": {
           "type": "string",
@@ -743,7 +565,7 @@
       "properties": {
         "dataField": {
           "type": "string",
-          "example": "bosomadex@gmail.com"
+          "example": "bosom.adek.sam@gmail.com"
         },
         "password": {
           "type": "string",
@@ -774,7 +596,6 @@
       }
     }
   },
-
   "externalDocs": {
     "description": "README.md file for project",
     "url": "https://github.com/bosom12/Ride-my-way/blob/master/README.md"

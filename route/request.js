@@ -4,16 +4,8 @@ import { verifyToken } from '../middleware/auth';
 
 const router = Router();
 
-router.post('/create/:driverId', verifyToken, request.requestRide);
+router.post('/create/:rideId', verifyToken, request.requestRide);
 
-router.get('/', verifyToken, request.getAllRequest);
-
-router.get('/get/:driverId', verifyToken, request.getOneRequest);
-
-router.get('/:driverId/toRide', verifyToken, request.getAllRequestToRide);
-
-router.put('/update/:driverId', verifyToken, request.updateRequest);
-
-router.delete('/delete/:driverId', verifyToken, request.deleteRequest);
+router.get('/ride', verifyToken, request.getAllRequestToRide);
 
 export default router;
