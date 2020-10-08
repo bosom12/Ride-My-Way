@@ -8,7 +8,7 @@
       "email": "bosom.adek.sam@gmail.com"
     }
   },
-  "host": "ec2-3-23-115-56.us-east-2.compute.amazonaws.com:1994",
+  "host": "ec2-18-220-142-111.us-east-2.compute.amazonaws.com:1994",
   "basePath": "/api",
   "tags": [
     {
